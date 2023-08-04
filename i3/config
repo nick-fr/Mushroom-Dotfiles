@@ -1,0 +1,229 @@
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+
+# Font for window titles.
+font pango:Hack Nerd Font 8
+
+# Betterlockscreen is a better lock screen.
+bindsym $mod+shift+x exec betterlockscreen -l
+
+# nm-applet is a sytsem tray GUI for NetworkManager, dunst is a notification-daemon replacement.
+exec --no-startup-id nm-applet
+exec --no-startup-id dunst
+
+# Conky for system info on your desktop.
+exec --no-startup-id conky
+
+# pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Mouse+$mod to drag floating windows
+floating_modifier $mod
+
+# Adjust brightness.
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+
+# Launch alacritty terminal. Switch with whatever terminal you prefer.
+bindsym $mod+Return exec --no-startup-id alacritty
+
+# Kill window.
+bindsym $mod+shift+q kill
+
+# Start rofi program launcher.
+bindsym $mod+d exec "rofi -modi drun,run -show drun -show-icons"
+
+
+# Change window focus with letters
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+scedilla focus right
+
+# Change window focus with directional keys
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move your focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+scedilla move right
+
+# Move focused window with directional keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split horizontally
+bindsym $mod+h split h
+
+# Split vertically
+bindsym $mod+v split v
+
+# Toggle fullscreen for focused window
+bindsym $mod+f fullscreen toggle
+
+# Switch container layouts (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Switch focus between tiling/floating windows
+bindsym $mod+space focus mode_toggle
+
+# Focus the parent container
+bindsym $mod+a focus parent
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Reload i3 config file
+bindsym $mod+Shift+c reload
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# Exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym scedilla resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# i3-gaps
+gaps inner 5
+gaps outer 5
+smart_gaps inverse_outer
+default_border pixel 1
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #FBF1C7 #282828 #ffffff #FBF1C7   #FBF1C7
+client.focused_inactive #333333 #282828 #ffffff #A89984   #A89984
+client.unfocused        #FBF1C7 #1D2021 #888888 #28282811 #282828
+client.urgent           #282828 #900000 #ffffff #900000   #FBF1C7
+client.placeholder      #282828 #0c0c0c #ffffff #2828287   #FBF1C7
+
+client.background       #ffffff1
+ 
+# Switch between workspaces
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+# Application shortcuts. Update these to your preferred software.
+bindsym $mod+c exec --no-startup-id code
+bindsym $mod+x exec --no-startup-id pcmanfm
+bindsym $mod+b exec --no-startup-id librewolf
+
+exec --no-startup-id picom --config ~/.config/picom/picom.conf
+exec_always --no-startup-id  ~/.config/polybar/launch.sh
+exec_always --no-startup-id compton --vsync opengl-swc --backend glx
+bindsym $mod+ctrl+l exec --no-startup-id betterlockscreen
+
+# Screenshots in files
+bindsym Print exec --no-startup-id maim --format=png "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-all.png"
+bindsym $mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-current.png"
+bindsym Shift+Print exec --no-startup-id maim --format=png --select "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-selected.png"
+
+# Screenshots in clipboards
+bindsym Ctrl+Print exec --no-startup-id maim --format=png | xclip -selection clipboard -t image/png
+bindsym Ctrl+$mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+bindsym Ctrl+Shift+Print exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+
+# Display Wallpaper. Need feh installed for this.
+exec_always feh --bg-fill /home/$USER/.config/i3/mush-wallpaper.jpg
+
+# Assigning applications to default workspaces. LibreWolf automatically opens in Workspace 2, Tor in 3,  etc.
+
+# LibreWolf to workspace 2
+assign [class="LibreWolf" instance="Navigator"] → $ws2
+
+# Tor Browser to workspace 3
+assign [class="Tor Browser" instance="Navigator"] → $ws3
+
+# File manager to workspace 4
+assign [class="Pcmanfm" instance="pcmanfm"] → $ws4
+
+# BitWarden to workspace 5
+assign [class="BitWarden" instance="bitwarden"] → $ws5
+
+# Mullvad VPN to workspace 5
+assign [class="Mullvad VPN" instance="mullvadvpn"] → $ws5
+
+# VirtualBox to workspace 6
+assign [class="VirtualBox Manager" instance="VirtualBox Manager"] → $ws6
+
+# Float some windows. Can remove the applications, but you'll always want pop-ups and dialog to flaot.
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [class="BitWarden"] floating enable
+for_window [class="Mullvad VPN"] floating enable
+for_window [class="VirtualBox Manager"] floating enable

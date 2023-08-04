@@ -1,0 +1,6 @@
+[Unit]
+Description=exiploc.sh
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /home/$USER/.config/conky/exiploc.sh
