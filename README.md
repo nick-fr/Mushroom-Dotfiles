@@ -14,7 +14,7 @@ The color scheme is taken from [morhetz/gruvbox](https://github.com/morhetz/gruv
 
 For installation instructions, please see the [Arch Wiki](https://wiki.archlinux.org/ "Arch Wiki for installing each package").
 
-\* conky.conf uses a bash script that requires [geoip](https://archlinux.org/packages/extra/x86_64/geoip/ "Application that returns the country of a given IP address"), which can be installed with `sudo pacman -S geoip geoip-database`
+\* conky.conf uses a shell script that requires [geoip](https://archlinux.org/packages/extra/x86_64/geoip/ "Application that returns the country of a given IP address"), which can be installed with `sudo pacman -S geoip geoip-database`
 
 ## Screenshots / Video
 
